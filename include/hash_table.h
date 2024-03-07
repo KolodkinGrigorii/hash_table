@@ -14,17 +14,29 @@ public:
 	}
 	HashTable(const HashTable& ht) {
 		length = ht.length;
-		ar = ht.ar;
-	}
-	HashTable operator=(const HashTable& ht) {
-		delete[] ar;
-		length = ht.length;
+		ar = new vector<pair<TypeKey, TypeData>>[length];
 		for (int i = 0; i < length; i++) {
 			ar[i] = ht.ar[i];
 		}
+	}
+	HashTable operator=(const HashTable& ht) {
+		if (length == ht.length) {
+			for (int i = 0; i < length; i++) {
+				ar[i] = ht.ar[i];
+			}
+		}
+		else {
+			length = ht.length;
+			delete[] ar;
+			ar = new vector<pair<TypeKey, TypeData>>[length];
+			for (int i = 0; i < length; i++) {
+				ar[i] = ht.ar[i];
+			}
+		}
 		return *this;
 	}
-	~HashTable(){
+	~HashTable() {
+		length = 0;
 		delete[] ar;
 	}
 	int hash(string s) {
@@ -46,9 +58,6 @@ public:
 	auto insert(TypeKey key, const TypeData& data) {
 		int pos = hash(key);
 		ar[pos].push_back(make_pair(key, data));
-		if (pos != length - 1) {
-			ar[pos].end() = ar[pos + 1].begin();
-		}
 		for (auto it = ar[pos].begin(); it != ar[pos].end(); it++) {
 			if (it->first == key) {
 				return it;
@@ -62,7 +71,7 @@ public:
 				return it;
 			}
 		}
-		return ar[length-1].end();
+		throw 'FALL';
 	}
 	bool remove(const TypeKey& key) {
 		int pos = hash(key);
@@ -81,7 +90,7 @@ public:
 				return it->second;
 			}
 		}
-		return ar[length - 1].end();
+		throw 'FALL';
 	}
 	auto begin(){
 		return ar[0].begin();
