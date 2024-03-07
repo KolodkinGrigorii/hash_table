@@ -58,6 +58,8 @@ public:
 	auto insert(TypeKey key, const TypeData& data) {
 		int pos = hash(key);
 		ar[pos].push_back(make_pair(key, data));
+		while (ar[j].size() == 0) {
+			j++;
 		for (auto it = ar[pos].begin(); it != ar[pos].end(); it++) {
 			if (it->first == key) {
 				return it;
@@ -71,7 +73,7 @@ public:
 				return it;
 			}
 		}
-		throw 'FALL';
+		return ar[length - 1].end();
 	}
 	bool remove(const TypeKey& key) {
 		int pos = hash(key);
@@ -93,7 +95,11 @@ public:
 		throw 'FALL';
 	}
 	auto begin(){
-		return ar[0].begin();
+		int i = 0;
+		while (ar[i].size() == 0) {
+			i++;
+		}
+		return ar[i].begin();
 	}
 	auto end() {
 		return ar[length-1].end();
