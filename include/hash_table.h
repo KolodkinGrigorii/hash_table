@@ -58,8 +58,6 @@ public:
 	auto insert(TypeKey key, const TypeData& data) {
 		int pos = hash(key);
 		ar[pos].push_back(make_pair(key, data));
-		while (ar[j].size() == 0) {
-			j++;
 		for (auto it = ar[pos].begin(); it != ar[pos].end(); it++) {
 			if (it->first == key) {
 				return it;
