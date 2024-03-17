@@ -83,7 +83,7 @@ public:
 		else {
 			length = ht.length;
 			delete[] ar;
-			ar = new vector < pair < TypeKey, TypeData>>[length];
+			ar = new vector < pair < TypeKey , TypeData>>[length];
 			for (int i = 0; i < length; i++) {
 				ar[i] = ht.ar[i];
 			}
@@ -109,6 +109,22 @@ public:
 	}
 	int hash(int i) {
 		return i % length;
+	}
+	int hash(double i) {
+		i = abs(i);
+		int n;
+		int man=frexp(i, &n);
+		int ord = trunc(i);
+		int res = man + pow(2,ord);
+		return res%length;
+	}
+	int hash(float i) {
+		i = abs(i);
+		int n;
+		int man = frexp(i, &n);
+		int ord = trunc(i);
+		int res = man + pow(2, ord);
+		return res % length;
 	}
 	auto insert(TypeKey key, const TypeData& data) {
 		int pos = hash(key);

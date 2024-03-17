@@ -108,3 +108,34 @@ TEST(HashTable, Iterator) {
 	EXPECT_EQ(it->first, "apple");
 	EXPECT_EQ(it->second, 1);
 }
+TEST(HashTableTest, equal_assign) {
+	HashTable<int, int> ht(10);
+	ht.insert(1, 1);
+	ht.insert(2, 2);
+	ht = ht;
+	EXPECT_EQ(1, ht.find(1)->second);
+	EXPECT_EQ(2, ht.find(2)->second);
+}
+TEST(HashTableTest, non_equal_assign) {
+	HashTable<int, int> ht(10);
+	ht.insert(1, 1);
+	ht.insert(2, 2);
+	HashTable<int, int> aht(9);
+	aht.insert(3, 3);
+	aht = ht;
+	EXPECT_EQ(1, aht.find(1)->second);
+}
+TEST(HashTableTest, double_table) {
+	HashTable<double, int> ht(10);
+	ht.insert(1.5, 1);
+	ht.insert(2.4, 2);
+	ht.insert(3.14, 4);
+	EXPECT_EQ(1, ht.find(1.5)->second);
+}
+TEST(HashTableTest, float_table) {
+	HashTable<float, int> ht(10);
+	ht.insert(1.5, 1);
+	ht.insert(2.4, 2);
+	ht.insert(3.14, 4);
+	EXPECT_EQ(2, ht.find(2.4)->second);
+}
