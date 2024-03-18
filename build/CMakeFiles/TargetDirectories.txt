@@ -1,4 +1,0 @@
-C:/Users/Григорий/hash_table/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Григорий/hash_table/build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/Григорий/hash_table/build/gtest/CMakeFiles/gtest.dir
-C:/Users/Григорий/hash_table/build/test/CMakeFiles/test_hash_table.dir
