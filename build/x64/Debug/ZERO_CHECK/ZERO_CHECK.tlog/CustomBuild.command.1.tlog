@@ -1,0 +1,10 @@
+^C:\USERS\ГРИГОРИЙ\HASH_TABLE\BUILD\CMAKEFILES\A3B00C36F5B59F8A0579CE4C4209306D\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Григорий/hash_table -BC:/Users/Григорий/hash_table/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Григорий/hash_table/build/hash_table.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
