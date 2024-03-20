@@ -144,7 +144,7 @@ TEST(HashTableTest, balance_big_table) {
 	for (int i = 0; i < 1000; i++) {
 		ht.insert(i, i);
 	}
-	cout << ht;
+	//cout << ht;
 }
 TEST(HashTableTest, many_elem_in_one_pos) {
 	HashTable<int, int> ht(10);
@@ -152,5 +152,5 @@ TEST(HashTableTest, many_elem_in_one_pos) {
 		ht.insert(i, i);
 		i += 10;
 	}
-	cout << ht;
+	//cout << ht;
 }
