@@ -74,20 +74,15 @@ public:
 			ar[i] = ht.ar[i];
 		}
 	}
-	HashTable operator=(const HashTable& ht) {
-		if (length == ht.length) {
-			for (int i = 0; i < length; i++) {
-				ar[i] = ht.ar[i];
-			}
+	HashTable& operator=(const HashTable& ht) {
+		if (this == &ht) {
+			return *this;
 		}
 		else {
 			length = ht.length;
-			delete[] ar;
-			ar = new vector < pair < TypeKey , TypeData>>[length];
+			ar = new  vector<pair<TypeKey, TypeData>>[ht.length];
 			for (int i = 0; i < ht.length; i++) {
-				for (auto it = ht.ar[i].begin(); it != ht.ar[i].end(); it++) {
-					this->insert(it->first, it->second);
-				}
+				ar[i] = ht.ar[i];
 			}
 		}
 		return *this;
@@ -151,12 +146,17 @@ public:
 	auto insert(TypeKey key, const TypeData& data) {
 		int pos = hash(key);
 		ar[pos].push_back(make_pair(key, data));
-		//checkcap();
+		int cap = checkcap();
+		if (cap) {
+			*this = this->balancecap(cap);
+		}
+		pos = hash(key);
 		for (auto it = ar[pos].begin(); it != ar[pos].end(); it++) {
 			if (it->first == key) {
 				return it;
 			}
 		}
+
 	}
 	Iterator find(const TypeKey& key) {
 		int pos = hash(key);
@@ -193,17 +193,26 @@ public:
 	Iterator end() {
 		return Iterator(ar, length, 0, length);
 	}
-	void checkcap() {
+	int checkcap() {
 		int sum = 0;
 		for (int i = 0; i < length; i++) {
 			sum += ar[i].size();
 		}
-		double cap = sum / length;
-		if (cap > 1) {
-			cout<<balancecap(sum);
+		if (sum > length) {
+			return sum;
+		}
+		else {
+			return 0;
 		}
 	}
 	HashTable balancecap(int newLength) {
+		HashTable<TypeKey, TypeData> ht(newLength);
+		for (int i = 0; i < this->length; i++) {
+			for (auto it = this->ar[i].begin(); it != this->ar[i].end(); it++) {
+				ht.insert(it->first, it->second);
+			}
+		}
+		return ht;
 	}
 	friend std::ostream& operator<<(std::ostream& out, const HashTable& v) {
 		for (int i = 0; i < v.length; i++) {

@@ -139,3 +139,18 @@ TEST(HashTableTest, float_table) {
 	ht.insert(3.14, 4);
 	EXPECT_EQ(2, ht.find(2.4)->second);
 }
+TEST(HashTableTest, balance_big_table) {
+	HashTable<int, int> ht(100);
+	for (int i = 0; i < 1000; i++) {
+		ht.insert(i, i);
+	}
+	cout << ht;
+}
+TEST(HashTableTest, many_elem_in_one_pos) {
+	HashTable<int, int> ht(10);
+	for (int i = 0; i < 1000;) {
+		ht.insert(i, i);
+		i += 10;
+	}
+	cout << ht;
+}
